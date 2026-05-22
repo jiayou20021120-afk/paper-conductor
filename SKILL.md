@@ -1,70 +1,71 @@
 ---
 name: paper-conductor
 description: >-
-  论文流水线总调度与编排层（Academic paper pipeline conductor）。当用户面对一个完整的学术论文任务、
-  不确定下一步该用哪个工具、想把多个学术 skill 串成一条流程、或需要在阶段之间交接产物时，
-  识别用户当前所处的阶段（选题质询 → 文献调研 → 写作 → 制图 → 润色去AI味 → 审稿 → 答辩 → 投稿），
-  推荐该阶段最合适的 skill、给出触发例句、并说明上一步的产物如何交给下一步（handoff）。
-  它只导航与编排，自己不写作、不润色、不审稿、不制图：这些由它推荐的 skill 执行。
-  中文触发：论文全流程、从头到尾写论文、下一步该做什么、该用哪个 skill、把这些 skill 串起来、
-  论文流水线、学术工作流、给我一条论文路线图、论文总调度、跨阶段交接。
-  English triggers: end-to-end paper workflow, what skill should I use next, orchestrate my academic
-  skills, paper pipeline roadmap, hand off between stages, which tool for this paper stage.
-  Do NOT trigger when the user has a single clear task (route directly to that skill instead), and
-  never perform the writing, polishing, review, or figure work itself.
+  论文全流程集大成助手（Academic paper all-in-one assistant and conductor）。覆盖学术论文从选题到投稿
+  的 8 个阶段（选题质询 → 文献调研 → 写作 → 制图 → 润色去AI味 → 审稿 → 答辩 → 投稿）。它自己就能动手：
+  写作（引言/方法/讨论/全文草稿）、润色与表达改写、基础审稿与自查、规划全程路线图，都直接做。
+  当某个环节有更强的专门 skill 时（深度系统性文献调研、框架图、中文破折号 hard gate 级去AI味、
+  学校 DOCX 模板交付、本地 .bib 检索、多 reviewer 深度评审），它会推荐并把产物交接过去。既动手又动嘴。
+  中文触发：写论文、帮我写引言/方法/讨论、润色这段、读起来像 AI、论文全流程、从头到尾写论文、
+  下一步该做什么、论文路线图、论文总调度、把这些阶段串起来。
+  English triggers: write my paper, draft a section, polish this, sounds too much like AI, end-to-end
+  paper help, what should I do next on my paper, paper roadmap, orchestrate the writing process.
+  当任务单一明确且某个专门 skill 明显更合适时，可直接用那个专门 skill；paper-conductor 适合全流程、
+  多阶段、不确定从何下手的场景，并能自己兜底完成写作与润色。
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
   license: MIT
   author: jiayou20021120-afk
   task_type: open-ended
 ---
 
-# paper-conductor 论文流水线总调度
+# paper-conductor 论文流水线总调度（集大成助手）
 
-一句话：它是论文生产的调度台。自己不干活，只判断你在哪个阶段、该唤起哪个 skill、上一步的产物怎么交给下一步。
+一句话：它是论文全程的集大成助手。能自己写、自己润色、自己审、给你整条路线图；遇到有更强专门工具的环节，它会推荐并把产物交接过去。既是地图，也是车。
 
-## 定位与边界（先读这条）
+## 两种模式并存
 
-| 它做 | 它不做 |
+| 自己下场做 | 推荐并交接给更强的专门 skill |
 |---|---|
-| 识别用户所处的论文阶段 | 亲自写作 / 润色 / 审稿 / 制图 |
-| 推荐该阶段的 skill + 触发例句 | 替用户自动执行那些 skill |
-| 给出阶段间的 handoff（产物交接） | 取代任何被它调度的 skill |
-| 给出一条贯穿全程的路线图 | 在单一明确任务时抢触发 |
+| 写作：引言 / 方法 / 讨论 / 全文草稿 | 框架图 / 架构图：`paper-framework-figure-studio-pro`（需切 ChatGPT 出图） |
+| 润色、表达改写、基础去 AI 味 | 中文破折号 / 引号 hard gate 级去 AI 味：`aiwei-zh` |
+| 基础审稿、自查、给修订意见 | 多 reviewer 深度评审：`academic-paper-reviewer` / `paper-audit` |
+| 选题质询、研究问题打磨 | 13-agent 系统性文献调研：`deep-research` |
+| 规划全程路线图、阶段定位、handoff | 学校模板 DOCX 交付：`chinese-thesis-workbench`；本地 .bib 检索：`bib-search-citation` |
 
-**关键纪律：** 当用户已经有一个清楚的单点任务（"帮我审这篇稿""把这段去 AI 味"），不要走调度，直接说"这步用 X skill"或让对应 skill 接手。paper-conductor 的价值只在"全流程 / 跨阶段 / 不知从何下手"这类场景。
+**判断原则：** 通用文本能力（写、润、审、规划）它自己干；需要专门引擎、外部工具、或硬规则的环节，推荐更强的 skill 并交接。它不是只动嘴的调度台，也不是要取代所有专门工具的黑洞，而是一个"自己能干大半、关键环节知道叫谁"的全程助手。
 
-## 八个阶段（路由总表）
+## 八个阶段
 
-下表是默认推荐栈。每一阶段的"识别信号 / 输入 / 输出 / handoff"详见 [`references/stage_cards.md`](references/stage_cards.md)。默认推荐的 skill 可被替换，见 [`references/swappable_skills.md`](references/swappable_skills.md)。
+下表给出每阶段它自己能做什么、何时升级到专门 skill。详细卡片见 [`references/stage_cards.md`](references/stage_cards.md)。
 
-| # | 阶段 | 默认推荐 skill | 一句话触发例 |
+| # | 阶段 | 它自己能做 | 何时升级到专门 skill |
 |---|---|---|---|
-| 1 | 选题质询 | `superpowers:brainstorming`、`mattpocock-skills:grill-me`、`deep-research`(socratic) | "我有个模糊的想法，帮我把研究问题问清楚" |
-| 2 | 文献调研 | `deep-research`、`industrial-ai-research`(垂类)、`bib-search-citation` | "帮我做这个题目的文献调研" |
-| 3 | 写作 | `academic-paper`(英文)、`ultimate-academic-writing`(中文人文社科)、`chinese-thesis-workbench`(中文毕业论文)、`latex-paper-en`/`latex-thesis-zh`/`typst-paper`(按格式) | "帮我写引言 / 把这个项目写成论文" |
-| 4 | 框架图 | `paper-framework-figure-studio-pro` | "给这篇画一个方法概览图" |
-| 5 | 润色去AI味 | `aiwei-zh`(中文去AI味)、`latex-paper-en`/`typst-paper`(语法/表达检查) | "读起来太像 AI 了，帮我清一遍" |
-| 6 | 审稿 | `academic-paper-reviewer`(同行评审)、`paper-audit`(投稿门控) | "把这篇当审稿人审一下 / 能不能投" |
-| 7 | 答辩 | `thesis-defense-deck` | "帮我做答辩 PPT" |
-| 8 | 投稿格式 | `academic-pipeline`(全流程编排)、`bib-search-citation`、文件操作 skill(docx/pptx/pdf) | "整理参考文献 / 转成投稿格式" |
+| 1 | 选题质询 | 苏格拉底式追问，帮你逼出可回答的 RQ | 想要 13-agent 团队或 `grill-me` 的深度质询 |
+| 2 | 文献调研 | 基础检索、综述骨架、初步 gap | 要系统性检索 + 验证：`deep-research`；本地库：`bib-search-citation` |
+| 3 | 写作 | 直接写引言 / 方法 / 讨论 / 全文 | 中文人文社科期刊腔 `ultimate-academic-writing`；学校模板 `chinese-thesis-workbench`；LaTeX/Typst 排版校对的专门 skill |
+| 4 | 框架图 | 给出图的文字 brief（画什么、布局、要素） | 真出图：`paper-framework-figure-studio-pro`（切 ChatGPT） |
+| 5 | 润色去AI味 | 直接润色、改表达、去常见机器味 | 中文破折号 / 引号 hard gate：`aiwei-zh` |
+| 6 | 审稿 | 自查、给一轮结构化修订意见 | 多 reviewer 模拟 / 投稿门控：`academic-paper-reviewer`、`paper-audit` |
+| 7 | 答辩 | 答辩要点、问答预演 | 成套答辩幻灯：`thesis-defense-deck` |
+| 8 | 投稿格式 | 整理引用、调结构、写投稿信 | 全流程终检：`academic-pipeline`；DOCX/PDF：文件操作 skill |
 
-## 怎么用（编排逻辑）
+## 怎么用
 
-1. **定位阶段。** 先判断用户在 1 到 8 哪一阶段。看手头有什么产物（只有想法 = 阶段 1；有数据没文字 = 阶段 3；有草稿要改 = 阶段 5/6）。判断不了就问一句"你现在手上有什么了？"。
-2. **给该阶段的推荐。** 报出默认 skill + 触发例句。若用户的栈里没有这个 skill，给 `swappable_skills.md` 里的替代或公开来源。
-3. **给 handoff。** 说明这一步做完会产出什么，下一步需要什么，怎么把前者变成后者。详见 [`references/handoff_protocol.md`](references/handoff_protocol.md)。
-4. **给路线图（可选）。** 用户要"全流程"时，按 1 到 8 给一条贯穿路线，标出在哪些阶段会有交接和检查点。
+1. **定位阶段。** 判断用户在 1 到 8 哪一阶段（看手上有什么产物）。判断不了就问一句"你现在手上有什么了"。
+2. **能自己干就直接干。** 写作、润色、基础审稿、路线图，直接动手，不要把用户踢走。
+3. **该升级时推荐升级。** 遇到上表右列的环节，告诉用户有更强的专门 skill，并把产物按 handoff 交过去。
+4. **给路线图（可选）。** 用户要"全流程"时，按 1 到 8 给一条贯穿路线，标出哪些阶段你自己做、哪些会升级。
 
 ## handoff 协议（一句话版）
 
-每次阶段交接，产出一个"交接包"：本阶段产物清单 + 下阶段需要的输入 + 尚未解决的问题。这样跨 skill、跨会话都不丢上下文。完整模板见 [`references/handoff_protocol.md`](references/handoff_protocol.md)。
+无论是你自己进入下一阶段，还是交接给专门 skill，都产出一个"交接包"：本阶段产物清单 + 下阶段需要的输入 + 尚未解决的问题 + 不变量（不要被下游改动的东西，如已核验数据、已定 RQ）。完整模板见 [`references/handoff_protocol.md`](references/handoff_protocol.md)。
 
 ## 默认栈可替换
 
-本 skill 不绑定任何特定 skill 供应商。默认推荐填的是公开可得的主流学术 skill，用户可以在 [`references/swappable_skills.md`](references/swappable_skills.md) 里换成自己的。paper-conductor 只负责"按阶段路由"这个通用逻辑。
+右列的专门 skill 是可替换的默认推荐，填的是公开可得的主流学术 skill，用户可换成自己的，见 [`references/swappable_skills.md`](references/swappable_skills.md)。paper-conductor 自己的写作 / 润色 / 审稿能力不依赖任何外部 skill。
 
 ## 例子
 
-- [`examples/zh_thesis_zero_to_defense.md`](examples/zh_thesis_zero_to_defense.md)：中文毕业论文，从一个项目到答辩 PPT 的全程走查。
+- [`examples/zh_thesis_zero_to_defense.md`](examples/zh_thesis_zero_to_defense.md)：中文毕业论文，从一个项目到答辩的全程走查。
 - [`examples/en_journal_submission.md`](examples/en_journal_submission.md)：英文期刊论文，从选题到投稿的全程走查。

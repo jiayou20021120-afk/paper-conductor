@@ -1,6 +1,6 @@
-# 可替换 skill 清单
+# 升级清单：何时换用更强的专门 skill
 
-paper-conductor 只负责"按阶段路由"这个通用逻辑。每个阶段推荐哪个具体 skill 是可配置的。下面给出默认推荐和它们的公开来源，以及如何换成你自己的栈。
+paper-conductor 自己就能做通用的写作、润色、基础审稿、路线规划。下面这些专门 skill 是各环节的"增强"：当你需要比通用能力更强的东西时（专门引擎、外部工具、硬规则），升级到它们。每个都可替换成你自己的栈。
 
 ## 怎么替换
 
@@ -8,7 +8,7 @@ paper-conductor 只负责"按阶段路由"这个通用逻辑。每个阶段推�
 
 ## 默认推荐与来源
 
-| 阶段 | 默认推荐 skill | 公开来源 | 替代选项 |
+| 阶段 | 升级到的专门 skill | 公开来源 | 替代选项 |
 |---|---|---|---|
 | 1 选题 | `superpowers:brainstorming`、`mattpocock-skills:grill-me` | obra/superpowers、mattpocock 社区插件 | 任何苏格拉底式质询工具 |
 | 2 调研 | `deep-research`、`bib-search-citation` | ARS（Imbad0202）、AWS（bahayonghang） | 任何文献检索 / 综述工具 |

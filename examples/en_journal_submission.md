@@ -1,48 +1,49 @@
 # 走查：英文期刊论文，从选题到投稿
 
-场景（脱敏）：研究者小 B 对"某类算法在某场景下的公平性"有兴趣，想投一篇英文期刊，但还没有明确的研究问题。
+场景（脱敏）：研究者小 B 对"某类算法在某场景下的公平性"有兴趣，想投英文期刊，但还没明确的研究问题。
+
+下面展示 paper-conductor 全程陪走：能自己干的直接干，遇到更强专门工具才升级。
 
 ---
 
-## 起点：用户说 "I'm interested in fairness of X, want to publish, but not sure what to ask"
+## 起点："I'm interested in fairness of X, want to publish, but not sure what to ask"
 
 **conductor 定位：** 模糊兴趣，无 RQ。阶段 1。
 
-**conductor 输出：**
-> Start with `deep-research` in socratic mode (or `superpowers:brainstorming`) to turn the interest into an answerable RQ. Don't write yet.
+**conductor 自己做：** Directly run a socratic line of questioning to turn the interest into an answerable RQ with scoped hypotheses. No need to launch another skill first.
 
-## 阶段 1 → 2
+> 升级提示：想要 13-agent 深度探索用 `deep-research`(socratic)。
 
-```
-Handoff: RQ + hypotheses → literature search terms
-Invariant: keep the RQ fixed during the search
-```
+## 阶段 2：文献调研
 
-**conductor 输出：**
-> Now run `deep-research` full mode for systematic search + a methodology blueprint. Manage references in `bib-search-citation` from day one.
+**conductor 自己做：** Give a first-pass review skeleton, key references, and an initial gap statement.
 
-## 阶段 2 → 3 写作
+> 升级提示：systematic search + source verification 用 `deep-research`(full)；本地库用 `bib-search-citation`。
 
-**conductor 定位：** English journal paper, has RQ + literature + (assume) results.
+## 阶段 3：写作
 
-**conductor 输出：**
-> Use `academic-paper` (ARS) to draft. If you have experiments, bring the verified results into the handoff packet. If you have a target venue with a LaTeX template, pair it with `latex-paper-en` for compile + ChkTeX + AXES coherence.
+**conductor 自己做：** Draft the intro, methods, results narrative, and discussion directly. If experiments exist, weave the verified results into the argument.
 
-## 阶段 3 → 4 → 5
+> 升级提示：want a 12-agent collaborative drafting pass 用 `academic-paper`；LaTeX template compile + ChkTeX + AXES 用对应排版 skill。
 
-**conductor 输出：**
-> Method figure via `paper-framework-figure-studio-pro`. Then language pass with `latex-paper-en` (grammar, sentence length, anti-citation-stacking). For an English paper, skip `aiwei-zh` (it is for Chinese prose).
+## 阶段 4 → 5：制图与润色
 
-## 阶段 5 → 6 审稿
+**conductor 自己做：** Provide a text brief for the method figure (what to draw, layout, module relations). Polish the prose directly: cut throat-clearing, vary sentence rhythm, fix Chinglish.
 
-**conductor 输出：**
-> Pre-submission, run `academic-paper-reviewer` for a mock peer review (EIC + 3 reviewers + Devil's Advocate), or `paper-audit` for a pass/fail submission gate. Revise at most two rounds; remaining issues go into Limitations, never fabricate to pass.
+> 升级提示：真出图用 `paper-framework-figure-studio-pro`。英文稿不需要 `aiwei-zh`（它是中文专用）。
 
-## 阶段 6 → 8 投稿
+## 阶段 6：审稿
 
-**conductor 输出：**
-> Final formatting: `academic-pipeline` can run the end-to-end finalize (integrity recheck + reference verification), `bib-search-citation` exports clean BibTeX, and the file-ops skills handle DOCX/PDF for the submission package. If rejected or R&R, come back to stage 6 to parse the reviews.
+**conductor 自己做：** Read the full draft and give one structured self-review pass (contribution clarity, argument validity, method soundness, citation coverage).
+
+> 升级提示：multi-perspective mock review 用 `academic-paper-reviewer`（EIC + 3 reviewers + Devil's Advocate）；pass/fail submission gate 用 `paper-audit`. Revise at most two rounds; remaining issues go into Limitations, never fabricate to pass.
+
+## 阶段 8：投稿
+
+**conductor 自己做：** Tidy the references to the target style, adjust structure to venue norms, draft the cover letter.
+
+> 升级提示：end-to-end finalize（引用/数据 100% 复核）用 `academic-pipeline`；clean BibTeX 用 `bib-search-citation`；DOCX/PDF 用文件操作 skill。If rejected or R&R, come back to stage 6 to parse the reviews.
 
 ---
 
-**conductor 全程做了什么：** routed across 7 stages, enforced the "verified data is an invariant" rule at every handoff, and never wrote, polished, or reviewed anything itself.
+**conductor 全程做了什么：** drafted, polished, self-reviewed, and planned the route itself; only escalated to specialized skills for figures, deep systematic research, multi-reviewer evaluation, and final integrity check. Both hands-on and orchestrating, and it enforced the "verified data is an invariant, never fabricate" rule at every handoff.

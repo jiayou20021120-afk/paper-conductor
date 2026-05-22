@@ -1,31 +1,35 @@
 # paper-conductor 论文流水线总调度
 
-> A pipeline conductor for academic paper writing. It does not write, polish, review, or draw figures itself. It tells you which stage you are in, which skill to use, and how to hand off between stages.
+> An all-in-one assistant and conductor for academic paper writing. It drafts, polishes, does a first-pass review, and plans the full route itself. When a stage has a stronger specialized skill, it recommends that skill and hands off. Both hands-on and orchestrating.
 >
-> 论文生产的调度台。它自己不写作、不润色、不审稿、不制图。它只判断你在哪个阶段、该用哪个 skill、上一步的产物怎么交给下一步。
+> 论文全程的集大成助手。它自己就能写、能润色、能做基础审稿、能给整条路线图。遇到有更强专门工具的环节，它会推荐那个 skill 并交接过去。既动手，也动嘴。
 
 ![license](https://img.shields.io/badge/license-MIT-green)
 ![type](https://img.shields.io/badge/type-Claude%20Code%20skill-blue)
-![status](https://img.shields.io/badge/status-v0.1.0-orange)
+![status](https://img.shields.io/badge/status-v0.2.0-orange)
 
 ## 为什么需要它
 
-学术 skill 越来越多：调研的、写作的、制图的、去 AI 味的、审稿的、做答辩 PPT 的。每个都很强，但它们各自为战。真正写一篇论文时，难的往往不是某一步，而是：
+学术 skill 越来越多：调研的、写作的、制图的、去 AI 味的、审稿的、做答辩 PPT 的。每个都很强，但写一篇论文时，你常常不想为每一步都手动切换工具。
 
-- 我现在到底该用哪个？
-- 上一个工具的产物怎么喂给下一个？
-- 有没有一条从选题到投稿的完整路线？
+paper-conductor 是一个集大成的全程助手：
 
-paper-conductor 补的就是这层"编排"。它是地图和导航，不是某一段路。
+- 通用的写作、润色、基础审稿、路线规划，它直接帮你做。
+- 遇到确实需要更强工具的环节（深度文献调研、框架图、中文破折号 hard gate、学校 DOCX 模板），它告诉你该用哪个专门 skill，并把产物交接过去。
 
-## 它做什么 / 不做什么
+它既是地图，也是车。能带你走，遇到需要专业装备的路段会告诉你换车。
 
-| 做 | 不做 |
+## 两种模式并存
+
+| 自己下场做 | 推荐并交接给更强的专门 skill |
 |---|---|
-| 识别你所处的论文阶段 | 亲自写作 / 润色 / 审稿 / 制图 |
-| 推荐该阶段的 skill + 触发例句 | 替你自动执行那些 skill |
-| 给阶段间的 handoff（产物交接） | 取代任何被它调度的 skill |
-| 给一条贯穿全程的路线图 | 在单一明确任务时抢触发 |
+| 写作：引言 / 方法 / 讨论 / 全文草稿 | 框架图 / 架构图（`paper-framework-figure-studio-pro`，需切 ChatGPT 出图） |
+| 润色、表达改写、基础去 AI 味 | 中文破折号 / 引号 hard gate 级去 AI 味（`aiwei-zh`） |
+| 基础审稿、自查、给修订意见 | 多 reviewer 深度评审（`academic-paper-reviewer` / `paper-audit`） |
+| 选题质询、研究问题打磨 | 13-agent 系统性文献调研（`deep-research`） |
+| 规划全程路线图、阶段定位、handoff | 学校模板 DOCX 交付（`chinese-thesis-workbench`）、本地 .bib 检索（`bib-search-citation`） |
+
+判断原则：通用文本能力它自己干；需要专门引擎、外部工具、或硬规则的环节，推荐更强的 skill 并交接。
 
 ## 八个阶段
 
@@ -44,7 +48,7 @@ flowchart LR
 
 选题质询 → 文献调研 → 写作 → 框架图 → 润色去AI味 → 审稿 → 答辩 → 投稿。审稿后按意见回到写作或润色修订（最多两轮），投稿被拒或返修则回到审稿。
 
-每阶段的识别信号、推荐 skill、输入输出、handoff，见 [`references/stage_cards.md`](references/stage_cards.md)。
+每阶段它自己能做什么、何时升级到专门 skill，见 [`references/stage_cards.md`](references/stage_cards.md)。
 
 ## 安装
 
@@ -61,14 +65,14 @@ flowchart LR
 git clone https://github.com/jiayou20021120-afk/paper-conductor.git ~/.claude/skills/paper-conductor
 ```
 
-两种方式都会让它被任何 Claude Code 会话自动发现。用自然语言触发，例如："我要从头写一篇论文，给我一条路线图" 或 "这步做完了，下一步该用什么"。
+两种方式都会让它被任何 Claude Code 会话自动发现。用自然语言触发，例如："帮我写引言"、"这段读起来太像 AI 了帮我清一遍"、"我要从头写一篇论文，给我一条路线图"。
 
 ## 怎么用
 
 1. **定位阶段：** 它先判断你在 8 个阶段的哪一个（看你手上有什么产物）。
-2. **给推荐：** 报出该阶段的默认 skill + 触发例句。
-3. **给 handoff：** 说明这步产出什么、下一步需要什么、怎么交接。
-4. **给路线图：** 要"全流程"时，给一条贯穿 1 到 8 的路线。
+2. **能自己干就直接干：** 写作、润色、基础审稿、路线图，它直接动手。
+3. **该升级时推荐升级：** 遇到有更强专门 skill 的环节，它告诉你用哪个，并交接产物。
+4. **给路线图：** 要"全流程"时，给一条贯穿 1 到 8 的路线，标出哪些它自己做、哪些会升级。
 
 两个完整走查：
 
@@ -77,14 +81,14 @@ git clone https://github.com/jiayou20021120-afk/paper-conductor.git ~/.claude/sk
 
 ## 默认栈可替换
 
-paper-conductor 不绑定任何特定 skill 供应商。默认推荐填的是公开可得的主流学术 skill，你可以换成自己的，见 [`references/swappable_skills.md`](references/swappable_skills.md)。它只负责"按阶段路由"这个通用逻辑，不内嵌任何被推荐 skill 的代码。
+右列的专门 skill 是可替换的默认推荐，填的是公开可得的主流学术 skill，你可以换成自己的，见 [`references/swappable_skills.md`](references/swappable_skills.md)。paper-conductor 自己的写作 / 润色 / 审稿能力不依赖任何外部 skill。
 
 ## 致谢
 
-paper-conductor 站在很多优秀的独立 skill 肩膀上。它只指向、不复制它们。感谢这些项目的作者：
+paper-conductor 在需要更强工具的环节会推荐这些优秀的独立 skill。它只指向、不复制它们。感谢这些项目的作者：
 
-- [academic-research-skills](https://github.com/Imbad0202/academic-research-skills)（Cheng-I Wu）：研究、写作、审稿、全流程编排
-- [academic-writing-skills](https://github.com/bahayonghang/academic-writing-skills)（bahayonghang）：LaTeX/Typst 后期校对、本地文献检索、中文去 AI 味
+- [academic-research-skills](https://github.com/Imbad0202/academic-research-skills)（Cheng-I Wu）：深度研究、12-agent 写作、多 reviewer 审稿、全流程编排
+- [academic-writing-skills](https://github.com/bahayonghang/academic-writing-skills)（bahayonghang）：LaTeX/Typst 后期校对、本地文献检索、中文去 AI 味 hard gate
 - chinese-thesis-workbench（ZyhSechub）：中文毕业论文标准化交付
 - paper-framework-figure-studio-pro（c-narcissus）：论文框架图
 - [superpowers](https://github.com/obra/superpowers)、mattpocock skills、Anthropic skills：选题质询、文件操作等
