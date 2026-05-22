@@ -1,0 +1,22 @@
+{
+  "name": "paper-conductor",
+  "version": "0.1.0",
+  "description": "论文流水线总调度。识别用户在学术论文生产中所处的阶段（选题→调研→写作→制图→润色→审稿→答辩→投稿），推荐该阶段最合适的 skill、给出触发例句、并说明阶段间的 handoff。它只导航与编排，不亲自写作/润色/审稿/制图。An orchestration layer that routes between independent academic-paper skills by stage; it never does the writing, polishing, review, or figure work itself.",
+  "author": {
+    "name": "jiayou20021120-afk",
+    "url": "https://github.com/jiayou20021120-afk"
+  },
+  "homepage": "https://github.com/jiayou20021120-afk/paper-conductor",
+  "repository": "https://github.com/jiayou20021120-afk/paper-conductor",
+  "license": "MIT",
+  "keywords": [
+    "academic",
+    "paper",
+    "pipeline",
+    "orchestration",
+    "router",
+    "workflow",
+    "thesis",
+    "research"
+  ]
+}

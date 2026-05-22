@@ -1,0 +1,17 @@
+{
+  "name": "paper-conductor",
+  "owner": {
+    "name": "jiayou20021120-afk",
+    "url": "https://github.com/jiayou20021120-afk"
+  },
+  "description": "论文流水线总调度 / Academic paper pipeline conductor: routes between independent academic skills by stage, with per-stage handoff.",
+  "plugins": [
+    {
+      "name": "paper-conductor",
+      "source": "./",
+      "description": "Stage-based orchestration layer for academic paper writing. Navigates 8 stages (topic → research → draft → figures → polish → review → defense → submission), recommends the right skill per stage, and defines handoffs. Does not write/polish/review/draw itself.",
+      "version": "0.1.0",
+      "license": "MIT"
+    }
+  ]
+}
