@@ -29,19 +29,39 @@ paper-conductor 补的就是这层"编排"。它是地图和导航，不是某�
 
 ## 八个阶段
 
-选题质询 → 文献调研 → 写作 → 框架图 → 润色去AI味 → 审稿 → 答辩 → 投稿。
+```mermaid
+flowchart LR
+    A["1 选题质询"] --> B["2 文献调研"]
+    B --> C["3 写作"]
+    C --> D["4 框架图"]
+    D --> E["5 润色去AI味"]
+    E --> F["6 审稿"]
+    F -->|最多两轮| C
+    F --> G["7 答辩"]
+    F --> H["8 投稿"]
+    H -->|被拒 / 返修| F
+```
+
+选题质询 → 文献调研 → 写作 → 框架图 → 润色去AI味 → 审稿 → 答辩 → 投稿。审稿后按意见回到写作或润色修订（最多两轮），投稿被拒或返修则回到审稿。
 
 每阶段的识别信号、推荐 skill、输入输出、handoff，见 [`references/stage_cards.md`](references/stage_cards.md)。
 
 ## 安装
 
-作为 Claude Code skill 使用：
+**方式一：作为 Claude Code plugin（推荐）**
+
+```text
+/plugin marketplace add jiayou20021120-afk/paper-conductor
+/plugin install paper-conductor
+```
+
+**方式二：直接 clone 到 skills 目录**
 
 ```bash
 git clone https://github.com/jiayou20021120-afk/paper-conductor.git ~/.claude/skills/paper-conductor
 ```
 
-放进 `~/.claude/skills/` 后会被任何 Claude Code 会话自动发现。用自然语言触发，例如："我要从头写一篇论文，给我一条路线图" 或 "这步做完了，下一步该用什么"。
+两种方式都会让它被任何 Claude Code 会话自动发现。用自然语言触发，例如："我要从头写一篇论文，给我一条路线图" 或 "这步做完了，下一步该用什么"。
 
 ## 怎么用
 
