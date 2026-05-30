@@ -8,6 +8,10 @@
 ![type](https://img.shields.io/badge/type-Claude%20Code%20skill-blue)
 ![status](https://img.shields.io/badge/status-v0.2.0-orange)
 
+<p align="center">
+  <img src="assets/demo.gif" alt="paper-conductor demo: routes a paper from topic to submission, doing some stages itself and handing others off to specialized skills" width="760">
+</p>
+
 ## 为什么需要它
 
 学术 skill 越来越多：调研的、写作的、制图的、去 AI 味的、审稿的、做答辩 PPT 的。每个都很强，但写一篇论文时，你常常不想为每一步都手动切换工具。
