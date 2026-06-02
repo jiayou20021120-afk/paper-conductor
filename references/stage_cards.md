@@ -20,8 +20,8 @@
 ## 阶段 2：文献调研（Literature Research）
 
 - **识别信号：** 已有 RQ，需要知道别人做过什么、空白在哪。
-- **conductor 自己做：** 基础检索、综述骨架、初步 gap 识别、给方法蓝图草案。
-- **何时升级：** 要系统性检索 + 来源验证 + 偏倚评估用 `deep-research`(full/systematic)；本地 .bib 库检索用 `bib-search-citation`。
+- **conductor 自己做：** 基础检索、综述骨架、初步 gap 识别、给方法蓝图草案；**本地证据可回溯文献问答**——对用户手上的几篇全文做"逐块取证 + 逐句引用 + 证据不足拒答"的问答，无需 API key，协议见 [`references/local_evidence_qa.md`](local_evidence_qa.md)。
+- **何时升级：** 要系统性**网络**检索 + 来源验证 + 偏倚评估用 `deep-research`(full/systematic)；已有结构化 .bib 库检索用 `bib-search-citation`。（本地全文取证问答是 conductor 自己做的，与这两者互补。）
 - **输入：** 阶段 1 的 RQ。**产出：** 综述骨架 + 关键文献 + gap + 方法蓝图。
 - **handoff 到 3：** RQ Brief + 方法蓝图 + 文献清单 = 写作原料。
 - **常见坑：** 把综述写成罗列。要有比较、有冲突、从冲突里推 gap。

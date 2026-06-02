@@ -6,7 +6,7 @@
 
 ![license](https://img.shields.io/badge/license-MIT-green)
 ![type](https://img.shields.io/badge/type-Claude%20Code%20skill-blue)
-![status](https://img.shields.io/badge/status-v0.2.0-orange)
+![status](https://img.shields.io/badge/status-v0.3.0-orange)
 
 <p align="center">
   <img src="assets/demo.gif" alt="paper-conductor demo: routes a paper from topic to submission, doing some stages itself and handing others off to specialized skills" width="760">
