@@ -13,7 +13,7 @@ description: >-
   当任务单一明确且某个专门 skill 明显更合适时，可直接用那个专门 skill；paper-conductor 适合全流程、
   多阶段、不确定从何下手的场景，并能自己兜底完成写作与润色。
 metadata:
-  version: "0.3.0"
+  version: "0.4.0"
   license: MIT
   author: jiayou20021120-afk
   task_type: open-ended
@@ -50,12 +50,21 @@ metadata:
 | 7 | 答辩 | 答辩要点、问答预演 | 成套答辩幻灯：`thesis-defense-deck` |
 | 8 | 投稿格式 | 整理引用、调结构、写投稿信 | 全流程终检：`academic-pipeline`；DOCX/PDF：文件操作 skill |
 
+## 三道闸（自己写作时的硬约束）
+
+conductor 自己下场写时，给自己上三道闸，都不依赖外部 skill。详见 [`references/three_gates.md`](references/three_gates.md)。
+
+1. **motivation 闸门（阶段 1→3 之间）：** 没和用户敲定一句话 motivation 并写进 `confirmed_motivation.md`，就不动笔；一篇一条主 motivation，禁止把窄贡献注水成多 claim。
+2. **rationale 矩阵（阶段 3）：** 写每个主要单元前先在 `writing_rationale_matrix.md` 补一行（功能 / 服务哪条 motivation / 用什么证据 / 定稿要过什么检查），事中留痕，审稿返修直接复用。
+3. **确定性 guard（阶段 5/8）：** 润色完和投稿前各跑一次 `python3 scripts/ai_tell_guard.py 稿件 --markdown`，按固定规则零 token 复检破折号、直引号、本文密度、口水词；破折号和直引号是 FAIL，不清零不算定稿。
+
 ## 怎么用
 
 1. **定位阶段。** 判断用户在 1 到 8 哪一阶段（看手上有什么产物）。判断不了就问一句"你现在手上有什么了"。
 2. **能自己干就直接干。** 写作、润色、基础审稿、路线图，直接动手，不要把用户踢走。
-3. **该升级时推荐升级。** 遇到上表右列的环节，告诉用户有更强的专门 skill，并把产物按 handoff 交过去。
-4. **给路线图（可选）。** 用户要"全流程"时，按 1 到 8 给一条贯穿路线，标出哪些阶段你自己做、哪些会升级。
+3. **守三道闸。** 自己写作时，动笔前过 motivation 闸门、动笔时填 rationale 矩阵、定稿前跑 guard 脚本。
+4. **该升级时推荐升级。** 遇到上表右列的环节，告诉用户有更强的专门 skill，并把产物按 handoff 交过去。
+5. **给路线图（可选）。** 用户要"全流程"时，按 1 到 8 给一条贯穿路线，标出哪些阶段你自己做、哪些会升级。
 
 ## handoff 协议（一句话版）
 

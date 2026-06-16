@@ -6,7 +6,7 @@
 
 ![license](https://img.shields.io/badge/license-MIT-green)
 ![type](https://img.shields.io/badge/type-Claude%20Code%20skill-blue)
-![status](https://img.shields.io/badge/status-v0.3.0-orange)
+![status](https://img.shields.io/badge/status-v0.4.0-orange)
 
 <p align="center">
   <img src="assets/demo.gif" alt="paper-conductor demo: routes a paper from topic to submission, doing some stages itself and handing others off to specialized skills" width="760">
@@ -53,6 +53,18 @@ flowchart LR
 选题质询 → 文献调研 → 写作 → 框架图 → 润色去AI味 → 审稿 → 答辩 → 投稿。审稿后按意见回到写作或润色修订（最多两轮），投稿被拒或返修则回到审稿。
 
 每阶段它自己能做什么、何时升级到专门 skill，见 [`references/stage_cards.md`](references/stage_cards.md)。
+
+## 三道闸：自己写作时的硬约束（v0.4.0）
+
+conductor 自己下场写时，给自己上三道不依赖外部 skill 的闸，灵感来自 PaperSpine 并按中文期刊场景重做。详见 [`references/three_gates.md`](references/three_gates.md)。
+
+- **motivation 闸门**（阶段 1→3）：没敲定一句话 motivation 并写进 `confirmed_motivation.md` 不动笔；一篇一条主 motivation，禁止把窄贡献注水成多 claim。
+- **rationale 矩阵**（阶段 3）：写每个主要单元前先在 `writing_rationale_matrix.md` 记下「为什么这么写」，事中留痕，审稿返修直接复用。
+- **确定性 guard**（阶段 5/8）：润色完和投稿前各跑一次脚本，按固定规则零 token 复检破折号、紧邻中文的直引号、本文密度、口水词。破折号和直引号是 FAIL。
+
+```bash
+python3 scripts/ai_tell_guard.py 论文_定稿.docx --markdown   # 也吃 .md / .txt / stdin
+```
 
 ## 安装
 

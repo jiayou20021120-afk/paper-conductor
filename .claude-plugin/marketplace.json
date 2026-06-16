@@ -10,7 +10,7 @@
       "name": "paper-conductor",
       "source": "./",
       "description": "All-in-one assistant for academic paper writing across 8 stages (topic → research → draft → figures → polish → review → defense → submission). Drafts, polishes, does first-pass review, and plans the route itself; recommends and hands off to stronger specialized skills when a stage needs them.",
-      "version": "0.2.0",
+      "version": "0.4.0",
       "license": "MIT"
     }
   ]
