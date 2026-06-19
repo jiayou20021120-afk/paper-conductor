@@ -1,6 +1,6 @@
 {
   "name": "paper-conductor",
-  "version": "0.4.0",
+  "version": "0.6.0",
   "description": "论文全流程集大成助手。覆盖学术论文从选题到投稿的 8 个阶段（选题→调研→写作→制图→润色→审稿→答辩→投稿）。它自己就能写作、润色、做基础审稿、规划路线图；遇到更强的专门 skill 时（深度调研、框架图、中文 hard gate 去AI味、学校 DOCX 模板、多 reviewer 评审）会推荐并交接。An all-in-one academic paper assistant and conductor: it drafts, polishes, does first-pass review, and plans the route itself, and escalates to stronger specialized skills when a stage needs them.",
   "author": {
     "name": "jiayou20021120-afk",

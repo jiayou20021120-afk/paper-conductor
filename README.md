@@ -6,7 +6,7 @@
 
 ![license](https://img.shields.io/badge/license-MIT-green)
 ![type](https://img.shields.io/badge/type-Claude%20Code%20skill-blue)
-![status](https://img.shields.io/badge/status-v0.5.0-orange)
+![status](https://img.shields.io/badge/status-v0.6.0-orange)
 
 <p align="center">
   <img src="assets/demo.gif" alt="paper-conductor demo: routes a paper from topic to submission, doing some stages itself and handing others off to specialized skills" width="760">
@@ -52,9 +52,11 @@ flowchart LR
 
 选题质询 → 文献调研 → 写作 → 框架图 → 润色去AI味 → 审稿 → 答辩 → 投稿。审稿后按意见回到写作或润色修订（最多两轮），投稿被拒或返修则回到审稿。
 
-其中阶段 5 自 **v0.5.0** 起是两关正交：**去 AI 味**（像不像机器写的，指纹）与**可读性体检**（读者认知带宽够不够，负荷：术语密度、超长句、抽象无锚点、防御性堆叠、数据轰炸）。一篇稿子可以破折号清零却依旧读着像跑障碍赛，两关不互相替代。清单见 [`references/readability_pass.md`](references/readability_pass.md)。
+其中阶段 5 自 **v0.5.0** 起是两关正交：**去 AI 味**（像不像机器写的，指纹）与**可读性体检**（读者认知带宽够不够，负荷：术语密度、超长句、抽象无锚点、防御性堆叠、数据轰炸）。一篇稿子可以破折号清零却依旧读着像跑障碍赛，两关不互相替代。清单见 [`references/readability_pass.md`](references/readability_pass.md)。去 AI 味自 **v0.6.0** 起再分字词层与结构层，结构层抓凑三点、段落等长、同义词轮换、镜像结构等篇章惯性，清单见 [`references/structural_ai_tells.md`](references/structural_ai_tells.md)。
 
 每阶段它自己能做什么、何时升级到专门 skill，见 [`references/stage_cards.md`](references/stage_cards.md)。
+
+阶段 3 写作自 **v0.6.0** 起带两份参考：正面写作技法（摘要骨架、引言写两遍、问题先行、Takeaway 段等，见 [`references/borrowed_writing_moves.md`](references/borrowed_writing_moves.md)），以及内容来源隔离的反编造纪律（事实与引用必须回溯到会话材料，见 [`references/anti_fabrication_writing.md`](references/anti_fabrication_writing.md)）。
 
 ## 三道闸：自己写作时的硬约束（v0.4.0）
 

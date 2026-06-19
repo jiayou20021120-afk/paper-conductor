@@ -13,7 +13,7 @@ description: >-
   当任务单一明确且某个专门 skill 明显更合适时，可直接用那个专门 skill；paper-conductor 适合全流程、
   多阶段、不确定从何下手的场景，并能自己兜底完成写作与润色。
 metadata:
-  version: "0.5.0"
+  version: "0.6.0"
   license: MIT
   author: jiayou20021120-afk
   task_type: open-ended
@@ -43,9 +43,9 @@ metadata:
 |---|---|---|---|
 | 1 | 选题质询 | 苏格拉底式追问，帮你逼出可回答的 RQ | 想要 13-agent 团队或 `grill-me` 的深度质询 |
 | 2 | 文献调研 | 基础检索、综述骨架、初步 gap；**本地证据可回溯问答**（几篇全文，逐块取证+逐句引用+证据不足拒答，无需 API key，见 [`references/local_evidence_qa.md`](references/local_evidence_qa.md)） | 系统性**网络**检索+验证：`deep-research`；结构化 .bib 库：`bib-search-citation` |
-| 3 | 写作 | 直接写引言 / 方法 / 讨论 / 全文 | 中文人文社科期刊腔 `ultimate-academic-writing`；学校模板 `chinese-thesis-workbench`；LaTeX/Typst 排版校对的专门 skill |
+| 3 | 写作 | 直接写引言 / 方法 / 讨论 / 全文（正面技法见 [`references/borrowed_writing_moves.md`](references/borrowed_writing_moves.md)；内容来源隔离防编造见 [`references/anti_fabrication_writing.md`](references/anti_fabrication_writing.md)） | 中文人文社科期刊腔 `ultimate-academic-writing`；学校模板 `chinese-thesis-workbench`；LaTeX/Typst 排版校对的专门 skill |
 | 4 | 框架图 | 给出图的文字 brief（画什么、布局、要素） | 真出图：`paper-framework-figure-studio-pro`（切 ChatGPT） |
-| 5 | 润色去AI味 | 两关正交：① 去机器味（口水词/段落结构/过渡腔）② 可读性体检（认知负荷：术语密度/超长句/抽象无锚，见 [`references/readability_pass.md`](references/readability_pass.md)） | 中文破折号 / 引号 hard gate：`aiwei-zh` |
+| 5 | 润色去AI味 | 两关正交：① 去机器味（字词层口水词/过渡腔 + 结构层凑三点/段落等长/同义词轮换/镜像结构，见 [`references/structural_ai_tells.md`](references/structural_ai_tells.md)）② 可读性体检（认知负荷：术语密度/超长句/抽象无锚，见 [`references/readability_pass.md`](references/readability_pass.md)） | 中文破折号 / 引号 hard gate：`aiwei-zh` |
 | 6 | 审稿 | 自查、给一轮结构化修订意见 | 多 reviewer 模拟 / 投稿门控：`academic-paper-reviewer`、`paper-audit` |
 | 7 | 答辩 | 答辩要点、问答预演 | 成套答辩幻灯：`thesis-defense-deck` |
 | 8 | 投稿格式 | 整理引用、调结构、写投稿信 | 全流程终检：`academic-pipeline`；DOCX/PDF：文件操作 skill |
