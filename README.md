@@ -6,7 +6,7 @@
 
 ![license](https://img.shields.io/badge/license-MIT-green)
 ![type](https://img.shields.io/badge/type-Claude%20Code%20skill-blue)
-![status](https://img.shields.io/badge/status-v0.4.0-orange)
+![status](https://img.shields.io/badge/status-v0.5.0-orange)
 
 <p align="center">
   <img src="assets/demo.gif" alt="paper-conductor demo: routes a paper from topic to submission, doing some stages itself and handing others off to specialized skills" width="760">
@@ -28,7 +28,7 @@ paper-conductor 是一个集大成的全程助手：
 | 自己下场做 | 推荐并交接给更强的专门 skill |
 |---|---|
 | 写作：引言 / 方法 / 讨论 / 全文草稿 | 框架图 / 架构图（`paper-framework-figure-studio-pro`，需切 ChatGPT 出图） |
-| 润色、表达改写、基础去 AI 味 | 中文破折号 / 引号 hard gate 级去 AI 味（`aiwei-zh`） |
+| 润色、表达改写、去 AI 味 + 可读性体检 | 中文破折号 / 引号 hard gate 级去 AI 味（`aiwei-zh`） |
 | 基础审稿、自查、给修订意见 | 多 reviewer 深度评审（`academic-paper-reviewer` / `paper-audit`） |
 | 选题质询、研究问题打磨 | 13-agent 系统性文献调研（`deep-research`） |
 | 规划全程路线图、阶段定位、handoff | 学校模板 DOCX 交付（`chinese-thesis-workbench`）、本地 .bib 检索（`bib-search-citation`） |
@@ -52,6 +52,8 @@ flowchart LR
 
 选题质询 → 文献调研 → 写作 → 框架图 → 润色去AI味 → 审稿 → 答辩 → 投稿。审稿后按意见回到写作或润色修订（最多两轮），投稿被拒或返修则回到审稿。
 
+其中阶段 5 自 **v0.5.0** 起是两关正交：**去 AI 味**（像不像机器写的，指纹）与**可读性体检**（读者认知带宽够不够，负荷：术语密度、超长句、抽象无锚点、防御性堆叠、数据轰炸）。一篇稿子可以破折号清零却依旧读着像跑障碍赛，两关不互相替代。清单见 [`references/readability_pass.md`](references/readability_pass.md)。
+
 每阶段它自己能做什么、何时升级到专门 skill，见 [`references/stage_cards.md`](references/stage_cards.md)。
 
 ## 三道闸：自己写作时的硬约束（v0.4.0）
@@ -60,7 +62,7 @@ conductor 自己下场写时，给自己上三道不依赖外部 skill 的闸，
 
 - **motivation 闸门**（阶段 1→3）：没敲定一句话 motivation 并写进 `confirmed_motivation.md` 不动笔；一篇一条主 motivation，禁止把窄贡献注水成多 claim。
 - **rationale 矩阵**（阶段 3）：写每个主要单元前先在 `writing_rationale_matrix.md` 记下「为什么这么写」，事中留痕，审稿返修直接复用。
-- **确定性 guard**（阶段 5/8）：润色完和投稿前各跑一次脚本，按固定规则零 token 复检破折号、紧邻中文的直引号、本文密度、口水词。破折号和直引号是 FAIL。
+- **确定性 guard**（阶段 5/8）：润色完和投稿前各跑一次脚本，按固定规则零 token 复检破折号、紧邻中文的直引号、本文密度、口水词，外加认知负荷维度的超长句与高门槛术语锚点。破折号和直引号是 FAIL。
 
 ```bash
 python3 scripts/ai_tell_guard.py 论文_定稿.docx --markdown   # 也吃 .md / .txt / stdin

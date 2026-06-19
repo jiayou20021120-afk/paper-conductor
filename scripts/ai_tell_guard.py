@@ -12,6 +12,8 @@ Soft rules (WARN, surface but do not block):
   - "本文" density above ~1 per 1000 chars (paper-humanlike ceiling).
   - machine-tell filler words and enumeration scaffolding.
   - heavy full-width parenthesis use (prefer 即 / 也就是 inline).
+  - over-long sentences (a cognitive-load tell, not an AI tell): split them.
+  - high-barrier / translationese terms whose first use lacks a plain anchor.
 
 Inputs: .txt, .md, or .docx (docx text is extracted with the stdlib only, no deps).
 Usage:
@@ -62,6 +64,9 @@ def _docx_text(path: str) -> str:
 
 # ----- rules ----------------------------------------------------------------
 
+# readability (cognitive-load) threshold — tune freely
+LONG_SENTENCE_CHARS = 60  # a CN academic sentence past this reads as a run-on
+
 EM_DASHES = {
     "—": "EM DASH —",
     "―": "HORIZONTAL BAR ―",
@@ -111,6 +116,11 @@ ENUM = ["首先，", "其次，", "再次，", "最后，", "一方面，", "另
 
 # 设问悬置：研究问题可用问号，但论证中段问完立答（自问自答）比不问更糟
 RHET_Q_OPENERS = ["那么，", "难道", "试问", "不禁要问", "我们不禁", "为什么呢"]
+
+# 高门槛 / 翻译腔术语：词本身可能没错，但首次出现该给一句人话锚点。
+# 这是 heuristic 且领域相关——计量/统计稿里「共变」「删失」属正常术语，
+# 嫌吵就删掉本列表，长句检测与硬规则都不受影响。
+JARGON_ANCHOR = ["右删失", "同侪生产", "能见度", "精化", "拉尖", "共变", "同形", "部均"]
 
 
 def _is_code_fence_line(line: str) -> bool:
@@ -174,6 +184,13 @@ def scan(text: str):
         if fw_paren >= 2:
             findings.append(("WARN", "parentheses", i, f"{fw_paren} full-width parens on one line (prefer 即/也就是)", line.strip()[:80]))
 
+        # 超长句：按句末标点切，去空白后字数超阈值就 WARN（认知负荷，非 AI 指纹）
+        for seg in re.split(r"[。！？；]", line):
+            s = re.sub(r"\s", "", seg)
+            if len(s) > LONG_SENTENCE_CHARS:
+                findings.append(("WARN", "长句", i,
+                                 f"单句 {len(s)} 字 > {LONG_SENTENCE_CHARS}（拆成框架句+逐条定义）", s[:40]))
+
     # document-level: 本文 density
     chars = len(re.sub(r"\s", "", text))
     benwen = text.count("本文")
@@ -181,6 +198,13 @@ def scan(text: str):
     if density > 1.0:
         findings.append(("WARN", "本文-density", 0,
                          f"本文 appears {benwen}x ≈ {density:.2f}/1000 chars (ceiling ~1.0)", ""))
+
+    # document-level: 高门槛术语首现是否给了人话锚点（heuristic, 见 JARGON_ANCHOR 注释）
+    for term in JARGON_ANCHOR:
+        n = text.count(term)
+        if n:
+            findings.append(("WARN", "术语锚点", 0,
+                             f"高门槛术语「{term}」出现 {n}x，确认首现给了人话注释", ""))
 
     return findings, {"chars": chars, "benwen": benwen, "density": density}
 

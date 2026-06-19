@@ -13,7 +13,7 @@ description: >-
   当任务单一明确且某个专门 skill 明显更合适时，可直接用那个专门 skill；paper-conductor 适合全流程、
   多阶段、不确定从何下手的场景，并能自己兜底完成写作与润色。
 metadata:
-  version: "0.4.0"
+  version: "0.5.0"
   license: MIT
   author: jiayou20021120-afk
   task_type: open-ended
@@ -28,7 +28,7 @@ metadata:
 | 自己下场做 | 推荐并交接给更强的专门 skill |
 |---|---|
 | 写作：引言 / 方法 / 讨论 / 全文草稿 | 框架图 / 架构图：`paper-framework-figure-studio-pro`（需切 ChatGPT 出图） |
-| 润色、表达改写、基础去 AI 味 | 中文破折号 / 引号 hard gate 级去 AI 味：`aiwei-zh` |
+| 润色、表达改写、去 AI 味 + 可读性体检 | 中文破折号 / 引号 hard gate 级去 AI 味：`aiwei-zh` |
 | 基础审稿、自查、给修订意见 | 多 reviewer 深度评审：`academic-paper-reviewer` / `paper-audit` |
 | 选题质询、研究问题打磨 | 13-agent 系统性文献调研：`deep-research` |
 | 规划全程路线图、阶段定位、handoff | 学校模板 DOCX 交付：`chinese-thesis-workbench`；本地 .bib 检索：`bib-search-citation` |
@@ -45,7 +45,7 @@ metadata:
 | 2 | 文献调研 | 基础检索、综述骨架、初步 gap；**本地证据可回溯问答**（几篇全文，逐块取证+逐句引用+证据不足拒答，无需 API key，见 [`references/local_evidence_qa.md`](references/local_evidence_qa.md)） | 系统性**网络**检索+验证：`deep-research`；结构化 .bib 库：`bib-search-citation` |
 | 3 | 写作 | 直接写引言 / 方法 / 讨论 / 全文 | 中文人文社科期刊腔 `ultimate-academic-writing`；学校模板 `chinese-thesis-workbench`；LaTeX/Typst 排版校对的专门 skill |
 | 4 | 框架图 | 给出图的文字 brief（画什么、布局、要素） | 真出图：`paper-framework-figure-studio-pro`（切 ChatGPT） |
-| 5 | 润色去AI味 | 直接润色、改表达、去常见机器味 | 中文破折号 / 引号 hard gate：`aiwei-zh` |
+| 5 | 润色去AI味 | 两关正交：① 去机器味（口水词/段落结构/过渡腔）② 可读性体检（认知负荷：术语密度/超长句/抽象无锚，见 [`references/readability_pass.md`](references/readability_pass.md)） | 中文破折号 / 引号 hard gate：`aiwei-zh` |
 | 6 | 审稿 | 自查、给一轮结构化修订意见 | 多 reviewer 模拟 / 投稿门控：`academic-paper-reviewer`、`paper-audit` |
 | 7 | 答辩 | 答辩要点、问答预演 | 成套答辩幻灯：`thesis-defense-deck` |
 | 8 | 投稿格式 | 整理引用、调结构、写投稿信 | 全流程终检：`academic-pipeline`；DOCX/PDF：文件操作 skill |
@@ -56,7 +56,7 @@ conductor 自己下场写时，给自己上三道闸，都不依赖外部 skill�
 
 1. **motivation 闸门（阶段 1→3 之间）：** 没和用户敲定一句话 motivation 并写进 `confirmed_motivation.md`，就不动笔；一篇一条主 motivation，禁止把窄贡献注水成多 claim。
 2. **rationale 矩阵（阶段 3）：** 写每个主要单元前先在 `writing_rationale_matrix.md` 补一行（功能 / 服务哪条 motivation / 用什么证据 / 定稿要过什么检查），事中留痕，审稿返修直接复用。
-3. **确定性 guard（阶段 5/8）：** 润色完和投稿前各跑一次 `python3 scripts/ai_tell_guard.py 稿件 --markdown`，按固定规则零 token 复检破折号、直引号、本文密度、口水词；破折号和直引号是 FAIL，不清零不算定稿。
+3. **确定性 guard（阶段 5/8）：** 润色完和投稿前各跑一次 `python3 scripts/ai_tell_guard.py 稿件 --markdown`，按固定规则零 token 复检破折号、直引号、本文密度、口水词，以及认知负荷维度的超长句与高门槛术语锚点；破折号和直引号是 FAIL，不清零不算定稿。
 
 ## 怎么用
 
