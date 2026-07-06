@@ -128,9 +128,10 @@ JARGON_ANCHOR = ["右删失", "同侪生产", "能见度", "精化", "拉尖", "
 # 说明文腔：把本可直接断言的前提写成向读者讲解的因果论证。
 # 修法 = 直接断言 + 上例子/上数据（见 references/deep_revision_pass.md 第一步）。
 EXPLAINER = [
-    "之所以", "的价值在于", "的合理性在于", "的合法性来自", "的意义在于",
+    "的价值在于", "的合理性在于", "的合法性来自", "的意义在于",
     "是为了避免", "因为它说的是", "换言之", "需要强调的是",
 ]
+# 「之所以」单独出现不报（易误伤），与「因为」同句组合命中才报，见 scan()。
 
 # 自夸式元评论：给自己的发现贴金；让发现自己说话，评价交给读者。
 SELF_PRAISE = ["最尖锐", "有锋芒", "耐人寻味", "值得点明", "值得玩味", "最有信息量", "最具张力"]
@@ -193,6 +194,11 @@ def scan(text: str):
                 if w in line:
                     findings.append(("WARN", rule, i, f"{label}: {w}", line.strip()[:80]))
 
+        # 之所以…是因为：组合命中才报，避免误伤单独的「之所以」
+        if "之所以" in line and "因为" in line:
+            findings.append(("WARN", "说明文腔", i,
+                             "explainer tone: 之所以…是因为（改直接断言+上证据）", line.strip()[:80]))
+
         # 自问自答：同一行里 ？后面还跟着实质内容（问完立答），论证中段是 AI 指纹
         for pos, c in enumerate(line):
             if c != "？":
@@ -221,13 +227,15 @@ def scan(text: str):
         findings.append(("WARN", "本文-density", 0,
                          f"本文 appears {benwen}x ≈ {density:.2f}/1000 chars (ceiling ~1.0)", ""))
 
-    # document-level: 句式 tic 密度（超限提示，不要求清零）
-    for term, ceiling in SENTENCE_TICS.items():
-        n = text.count(term)
-        d = (n / chars * 1000) if chars else 0.0
-        if d > ceiling:
-            findings.append(("WARN", "句式tic", 0,
-                             f"「{term}」{n}x ≈ {d:.2f}/千字 > {ceiling}（降到自然密度即可，别清零）", ""))
+    # document-level: 句式 tic 密度（超限提示，不要求清零）。
+    # 短文本密度失真，chars < 3000 或命中 < 3 次不报。
+    if chars >= 3000:
+        for term, ceiling in SENTENCE_TICS.items():
+            n = text.count(term)
+            d = (n / chars * 1000) if chars else 0.0
+            if n >= 3 and d > ceiling:
+                findings.append(("WARN", "句式tic", 0,
+                                 f"「{term}」{n}x ≈ {d:.2f}/千字 > {ceiling}（降到自然密度即可，别清零）", ""))
 
     # document-level: 高门槛术语首现是否给了人话锚点（heuristic, 见 JARGON_ANCHOR 注释）
     for term in JARGON_ANCHOR:
