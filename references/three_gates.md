@@ -76,6 +76,6 @@ cat draft.txt | python3 scripts/ai_tell_guard.py -
 **判定：**
 
 - **FAIL（拦截，退出码 1）：** 破折号家族（`—` `―` `——` 等）、紧邻中文的直引号 `"` `'`（纯 ASCII / 英文引号 / 代码上下文不报，避免误杀）。这两条是硬规则，FAIL 不清零就不算定稿。
-- **WARN（提示，不拦截）：** 本文密度 > 约 1/千字、口水词（值得注意的是 / 综上所述 / 显而易见…）、枚举脚手架（首先，/ 其一，…）、单行全角括号堆叠，以及照 `paper-humanlike-checklist` 七症状补的：须字辈合规旁白（须注意 / 还须澄清…）、元叙述过渡腔（本文将 / 接下来将 / 如前所述…）、评论散文笔法（再往深处看 / 真正的问题或许是…）、自问自答（论证段问完立答）、设问开场（那么，/ 难道…）。研究问题用问号收尾不会误报。此外按可读性体检（认知负荷维度，正交于 AI 味）补两项：超长句（单句 > 60 字，阈值见脚本 `LONG_SENTENCE_CHARS`）、高门槛术语首现无锚点（能见度 / 右删失 / 部均…，词表 `JARGON_ANCHOR`，计量稿嫌吵可删，修复动作见 [`readability_pass.md`](readability_pass.md)）。
+- **WARN（提示，不拦截）：** 本文密度 > 约 1/千字、口水词（值得注意的是 / 综上所述 / 显而易见…）、枚举脚手架（首先，/ 其一，…）、单行全角括号堆叠，以及照 `paper-humanlike-checklist` 七症状补的：须字辈合规旁白（须注意 / 还须澄清…）、元叙述过渡腔（本文将 / 接下来将 / 如前所述…）、评论散文笔法（再往深处看 / 真正的问题或许是…）、自问自答（论证段问完立答）、设问开场（那么，/ 难道…）。研究问题用问号收尾不会误报。此外按可读性体检（认知负荷维度，正交于 AI 味）补两项：超长句（单句 > 60 字，阈值见脚本 `LONG_SENTENCE_CHARS`）、高门槛术语首现无锚点（能见度 / 右删失 / 部均…，词表 `JARGON_ANCHOR`，计量稿嫌吵可删，修复动作见 [`readability_pass.md`](readability_pass.md)）。v0.7.0 起再补语义层线索：说明文腔（之所以…是因为 / 的价值在于…）、自夸式元评论（最尖锐 / 有锋芒…）、HARKing 事后口吻（探索性地发现…），以及文档级句式 tic 密度（这一 / 真正 / 恰恰 / 而是）。这批 WARN 的修法见 [`deep_revision_pass.md`](deep_revision_pass.md) 与 [`hypothesis_discipline.md`](hypothesis_discipline.md)。
 
-**边界：** 它只查可程序化的硬指纹，不替代阶段 5 的语义润色，也不替代 `aiwei-zh` 的六维深洗。它是定稿前那道「机器先过一遍、人再过」的栅栏。改规则改 `scripts/ai_tell_guard.py` 顶部的 `EM_DASHES` / `STRAIGHT_QUOTES` / `FILLER` / `LONG_SENTENCE_CHARS` / `JARGON_ANCHOR` 列表即可。
+**边界：** 它只查可程序化的硬指纹，不替代阶段 5 的语义润色，也不替代 `aiwei-zh` 的六维深洗。它是定稿前那道「机器先过一遍、人再过」的栅栏。「人再过」那一步的清单就是 [`deep_revision_pass.md`](deep_revision_pass.md)：guard 报 PASS 只说明硬指纹清零，不说明稿子修完了。改规则改 `scripts/ai_tell_guard.py` 顶部的 `EM_DASHES` / `STRAIGHT_QUOTES` / `FILLER` / `LONG_SENTENCE_CHARS` / `JARGON_ANCHOR` 列表即可。

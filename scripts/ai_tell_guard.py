@@ -14,6 +14,9 @@ Soft rules (WARN, surface but do not block):
   - heavy full-width parenthesis use (prefer 即 / 也就是 inline).
   - over-long sentences (a cognitive-load tell, not an AI tell): split them.
   - high-barrier / translationese terms whose first use lacks a plain anchor.
+  - semantic-layer tells: explainer tone, self-praising meta-comments, HARKing
+    post-hoc phrasing (see references/deep_revision_pass.md, hypothesis_discipline.md).
+  - sentence-tic density (这一 / 真正 / 恰恰 / 而是) above natural ceilings.
 
 Inputs: .txt, .md, or .docx (docx text is extracted with the stdlib only, no deps).
 Usage:
@@ -122,6 +125,22 @@ RHET_Q_OPENERS = ["那么，", "难道", "试问", "不禁要问", "我们不禁
 # 嫌吵就删掉本列表，长句检测与硬规则都不受影响。
 JARGON_ANCHOR = ["右删失", "同侪生产", "能见度", "精化", "拉尖", "共变", "同形", "部均"]
 
+# 说明文腔：把本可直接断言的前提写成向读者讲解的因果论证。
+# 修法 = 直接断言 + 上例子/上数据（见 references/deep_revision_pass.md 第一步）。
+EXPLAINER = [
+    "之所以", "的价值在于", "的合理性在于", "的合法性来自", "的意义在于",
+    "是为了避免", "因为它说的是", "换言之", "需要强调的是",
+]
+
+# 自夸式元评论：给自己的发现贴金；让发现自己说话，评价交给读者。
+SELF_PRAISE = ["最尖锐", "有锋芒", "耐人寻味", "值得点明", "值得玩味", "最有信息量", "最具张力"]
+
+# HARKing 事后口吻：假设应先于数据（见 references/hypothesis_discipline.md）。
+HARKING = ["探索性地发现", "我们注意到", "数据显示一个有趣的模式", "据此推测", "一个有趣的发现是"]
+
+# 句式 tic 的文档级密度上限（次/千字）：超限是指纹，但降到自然密度即可，别清零。
+SENTENCE_TICS = {"这一": 1.5, "真正": 0.5, "恰恰": 0.5, "而是": 0.8}
+
 
 def _is_code_fence_line(line: str) -> bool:
     return line.lstrip().startswith("```") or line.lstrip().startswith("    ")
@@ -166,6 +185,9 @@ def scan(text: str):
             (ESSAYISTIC, "评论笔法", "essayistic move in an argument section"),
             (ENUM, "enumeration", "enumeration scaffolding"),
             (RHET_Q_OPENERS, "设问", "rhetorical-question opener"),
+            (EXPLAINER, "说明文腔", "explainer tone: assert, then show evidence"),
+            (SELF_PRAISE, "自夸元评论", "self-praise on own finding: let it speak"),
+            (HARKING, "HARKing", "post-hoc phrasing: hypothesis precedes data"),
         ):
             for w in words:
                 if w in line:
@@ -198,6 +220,14 @@ def scan(text: str):
     if density > 1.0:
         findings.append(("WARN", "本文-density", 0,
                          f"本文 appears {benwen}x ≈ {density:.2f}/1000 chars (ceiling ~1.0)", ""))
+
+    # document-level: 句式 tic 密度（超限提示，不要求清零）
+    for term, ceiling in SENTENCE_TICS.items():
+        n = text.count(term)
+        d = (n / chars * 1000) if chars else 0.0
+        if d > ceiling:
+            findings.append(("WARN", "句式tic", 0,
+                             f"「{term}」{n}x ≈ {d:.2f}/千字 > {ceiling}（降到自然密度即可，别清零）", ""))
 
     # document-level: 高门槛术语首现是否给了人话锚点（heuristic, 见 JARGON_ANCHOR 注释）
     for term in JARGON_ANCHOR:

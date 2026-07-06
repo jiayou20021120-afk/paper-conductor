@@ -13,6 +13,7 @@
 - **何时升级：** 想要 13-agent 团队的深度探索用 `deep-research`(socratic)；想被狠狠质询用 `mattpocock-skills:grill-me`。
 - **输入：** 一个兴趣领域 / 观察 / 现象。**产出：** 可回答的 RQ + 假设 + 范围。
 - **motivation 闸门（闸 1）：** 在交到写作前，敲定一句话 motivation 写进 `confirmed_motivation.md`；一篇一条主 motivation，禁止把窄贡献注水成多 claim。用户没确认就停在这里。模板见 [`references/three_gates.md`](three_gates.md)。
+- **假设纪律：** 产出的假设要有方向、可证伪，且先于数据从理论推出（反 HARKing）；写不出方向性假设，多半还停在描述现象。见 [`references/hypothesis_discipline.md`](hypothesis_discipline.md)。
 - **handoff 到 2：** RQ + 假设 + confirmed_motivation 打包，作为检索起点。
 - **常见坑：** 跳过这步直接写，导致论文没有清晰问题；或把一个窄发现吹成一串卖点。
 
@@ -34,6 +35,7 @@
 - **识别信号：** 有 RQ、文献、（可能）数据，要变成文字。
 - **conductor 自己做：** 直接写引言 / 方法 / 讨论 / 结论 / 全文草稿，按 IMRaD 或学科结构组织论证。
 - **rationale 矩阵（闸 2）：** 写每个主要单元前先在 `writing_rationale_matrix.md` 补一行（功能 / 服务哪条 motivation / 用什么证据 / 定稿要过什么检查）。事中留痕，审稿返修直接复用。模板见 [`references/three_gates.md`](three_gates.md)。
+- **论证结构：** 按「理论预测 → 检验 → 证实/证伪」组织，不写成事后发现叙事；探索性工作可以重构，但预期必须真能独立于数据推导出来。见 [`references/hypothesis_discipline.md`](hypothesis_discipline.md)。
 - **何时升级：** 中文人文社科期刊腔用 `ultimate-academic-writing`；中文毕业论文按学校模板交付用 `chinese-thesis-workbench`；已定 LaTeX/Typst 格式且要编译校对用对应排版 skill；要 12-agent 协作写作用 `academic-paper`。
 - **输入：** 阶段 2 交接包 + confirmed_motivation（+ 实验结果，若有）。**产出：** 论文草稿 + rationale 矩阵。
 - **handoff 到 4/5：** 方法/架构章节交给制图；全文交给润色。
@@ -57,6 +59,7 @@
 - **识别信号：** 内容定了，读起来生硬、像 AI、或要停下来逐句解码。
 - **conductor 自己做（两关正交）：** ① 去 AI 味——口水词、千篇一律的段落结构、过渡腔，治的是「像不像机器写的」指纹。② 可读性体检——术语密度、超长句、抽象无锚点、防御性堆叠、数据轰炸结论后置，治的是「读者带宽够不够」的认知负荷。一篇可以零 AI 味却依旧难读，两关都要过。七个信号和修复动作见 [`references/readability_pass.md`](readability_pass.md)。
 - **确定性 guard（闸 3）：** 润色完跑一次 `python3 scripts/ai_tell_guard.py 稿件 --markdown`，按固定规则零 token 复检；破折号、直引号是 FAIL，不清零不算过。FAIL 查机器指纹，WARN 兼查超长句与术语锚点这类认知负荷信号。它在语义润色之外加一道机器栅栏，不替代 `aiwei-zh` 的深洗。见 [`references/three_gates.md`](three_gates.md)。
+- **深修稿（guard 过零后）：** 语义层三查（自夸式元评论 / 句式 tic / 说明文腔）加论证过剩收敛（重复地图 / 隐喻限额 / 少写「我不是什么」）。工具双过不等于完成。见 [`references/deep_revision_pass.md`](deep_revision_pass.md)。
 - **何时升级：** 中文要破折号/引号 hard gate 级、皇甫 2026 六维框架严格清洗用 `aiwei-zh`；LaTeX/Typst 语法层用对应排版 skill。
 - **输入：** 阶段 3/4 草稿。**产出：** 通顺、去机器味、过了可读性体检和 guard 的稿子。
 - **handoff 到 6：** 干净稿交审稿。
@@ -71,7 +74,7 @@
 - **何时升级：** 要多视角模拟评审（EIC + 3 reviewers + Devil's Advocate）用 `academic-paper-reviewer`；要 pass/fail 投稿门控用 `paper-audit`。
 - **输入：** 阶段 5 干净稿。**产出：** 修订意见 + 决策。
 - **handoff 回 3/5：** 按意见回写作或润色，最多两轮，剩余写进局限。
-- **常见坑：** 把 AI 审稿当真同行评审。它是自查工具，不替代真实评审。
+- **常见坑：** 把 AI 审稿当真同行评审。它是自查工具，不替代真实评审。另一个坑是返修越改越厚：逢审必改会堆出论证过剩，回写前先用 [`references/deep_revision_pass.md`](deep_revision_pass.md) 的判据扫一遍（这段在增加发现，还是在增加自我辩护），意见要选择性采纳。
 
 ---
 
