@@ -13,7 +13,7 @@ description: >-
   当任务单一明确且某个专门 skill 明显更合适时，可直接用那个专门 skill；paper-conductor 适合全流程、
   多阶段、不确定从何下手的场景，并能自己兜底完成写作与润色。
 metadata:
-  version: "0.7.0"
+  version: "0.9.0"
   license: MIT
   author: jiayou20021120-afk
   task_type: open-ended
@@ -57,6 +57,17 @@ conductor 自己下场写时，给自己上三道闸，都不依赖外部 skill�
 1. **motivation 闸门（阶段 1→3 之间）：** 没和用户敲定一句话 motivation 并写进 `confirmed_motivation.md`，就不动笔；一篇一条主 motivation，禁止把窄贡献注水成多 claim。
 2. **rationale 矩阵（阶段 3）：** 写每个主要单元前先在 `writing_rationale_matrix.md` 补一行（功能 / 服务哪条 motivation / 用什么证据 / 定稿要过什么检查），事中留痕，审稿返修直接复用。
 3. **确定性 guard（阶段 5/8）：** 润色完和投稿前各跑一次 `python3 scripts/ai_tell_guard.py 稿件 --markdown`，按固定规则零 token 复检破折号、直引号、本文密度、口水词，以及认知负荷维度的超长句与高门槛术语锚点；破折号和直引号是 FAIL，不清零不算定稿。guard 过零只拦得住机器指纹，语义层三查与论证过剩收敛是 PASS 之后的必经一步，见 [`references/deep_revision_pass.md`](references/deep_revision_pass.md)；交付前最后再走一遍冷读协议（响应式修改不等于可交付，禁说"零遗漏"），见 [`references/language_cold_read.md`](references/language_cold_read.md)。
+
+## 术语译名纪律（中文论文硬规矩）
+
+写中文论文引用任何理论 / 概念 / 术语时，**禁止拿到外文术语就自行直译**。正确顺序：
+
+1. **先查通行译名。** 动笔前检索该术语在中文语境里最常用的称呼（中文文献、教材、综述里的主流叫法），检索走 agent-reach / wigolo，看中文文献实际怎么称呼它，而不是自己造译法。
+2. **多个译法并存时，选中文文献中最通行的一种**，全篇统一，不混用。
+3. **首次出现括注原文**（如"守门人理论（gatekeeping theory）"），之后只用中文译名。
+4. 查不到通行译名（确属新概念）才允许自译，且要在文中说明系作者试译。
+
+理由：自行直译的术语在审稿人眼里既暴露"没读过中文文献"，又是 AI 翻译腔的高发指纹；通行译名本身就是与中文学术共同体对话的接口。
 
 ## 怎么用
 

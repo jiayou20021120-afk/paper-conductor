@@ -6,7 +6,7 @@
 
 ![license](https://img.shields.io/badge/license-MIT-green)
 ![type](https://img.shields.io/badge/type-Claude%20Code%20skill-blue)
-![status](https://img.shields.io/badge/status-v0.7.0-orange)
+![status](https://img.shields.io/badge/status-v0.9.0-orange)
 
 <p align="center">
   <img src="assets/demo.gif" alt="paper-conductor demo: routes a paper from topic to submission, doing some stages itself and handing others off to specialized skills" width="760">
@@ -56,7 +56,7 @@ flowchart LR
 
 每阶段它自己能做什么、何时升级到专门 skill，见 [`references/stage_cards.md`](references/stage_cards.md)。
 
-阶段 3 写作自 **v0.6.0** 起带两份参考：正面写作技法（摘要骨架、引言写两遍、问题先行、Takeaway 段等，见 [`references/borrowed_writing_moves.md`](references/borrowed_writing_moves.md)），以及内容来源隔离的反编造纪律（事实与引用必须回溯到会话材料，见 [`references/anti_fabrication_writing.md`](references/anti_fabrication_writing.md)）。**v0.7.0** 在阶段 1/3 再加假设纪律：先立可证伪的方向性假设再看数据，反 HARKing，最高标准是样本外验证，见 [`references/hypothesis_discipline.md`](references/hypothesis_discipline.md)。
+阶段 3 写作自 **v0.6.0** 起带两份参考：正面写作技法（摘要骨架、引言写两遍、问题先行、Takeaway 段等，见 [`references/borrowed_writing_moves.md`](references/borrowed_writing_moves.md)），以及内容来源隔离的反编造纪律（事实与引用必须回溯到会话材料，见 [`references/anti_fabrication_writing.md`](references/anti_fabrication_writing.md)）。**v0.7.0** 在阶段 1/3 再加假设纪律：先立可证伪的方向性假设再看数据，反 HARKing，最高标准是样本外验证，见 [`references/hypothesis_discipline.md`](references/hypothesis_discipline.md)。**v0.9.0** 再加术语译名纪律：中文论文引用理论 / 术语禁止自行直译，动笔前先查中文文献通行译名，多译并存取最通行且全篇统一，首次出现括注原文。
 
 ## 三道闸：自己写作时的硬约束（v0.4.0）
 
